@@ -1,3 +1,5 @@
+
+
 class etat(enum.Enum):
     DRAPEAU = "drapeau"
     CACHE = "cache"
