@@ -1,6 +1,6 @@
+from enum import Enum
 
-
-class etat(enum.Enum):
+class etat(Enum):
     DRAPEAU = "drapeau"
     CACHE = "cache"
     DECOUVERT = "decouvert"
@@ -13,22 +13,34 @@ class Cellule:
         self.est_decouverte = False
         self.est_drapeau = False
         self.voisin = None
+        self.nombre = 0
 
+    def __repr__(self):
+        if self.est_mine:
+            return "X"
+        else:
+            return str(self.nombre)
+        
+    #méthodes pour contrôleur
     def set_nombre(self, nombre):
         self.nombre = nombre
 
+    def incremente_nombre(self):
+        self.nombre += 1
+
+    def definir_comme_mine(self):
+        self.est_mine = True
+
+
+
+    #méthodes pour interface
     def decouvrir(self):
         if not self.est_drapeau:
             self.est_decouverte = True
 
-    def reveler(self):
-        pass
 
     def alterner_drapeau(self):
-        pass
+        if not self.est_decouverte
+            self.est_drapeau = not self.est_drapeau
 
-    def definir_comme_mine(self):
-        pass
-
-    def to_dict(self):
-        pass
+    
