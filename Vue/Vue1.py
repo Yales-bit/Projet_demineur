@@ -34,8 +34,7 @@ class MineSweeperUI(QWidget):
         self.is_paused = False
 
         self.setWindowTitle("Démineur")
-        self.setFixedSize(700, 650)
-        #self.setFixedSize(420, 450)
+        self.setFixedSize(420, 450)
 
         main_layout = QVBoxLayout()
         main_layout.setContentsMargins(8, 8, 8, 8)
