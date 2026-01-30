@@ -1,6 +1,6 @@
 import random
 from Cellule import Cellule
-Taille = 8
+
 
 def creer_grille(n_mines: int, taille = 10):
     """
@@ -33,8 +33,8 @@ def creer_grille(n_mines: int, taille = 10):
 
 
 def main():
-    k =creer_grille(20,Taille)
-    for i in range(Taille):
+    k = creer_grille(20)
+    for i in range(10):
         print(k[i])
         
 
