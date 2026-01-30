@@ -1,13 +1,14 @@
 import random
 from Cellule import Cellule
+Taille = 8
 
-
-def creer_grille(n_mines: int):
+def creer_grille(n_mines: int, taille = 10):
     """
     Crée une grille de 10x10, place les mines de façon aléatoire
     et calcule le nombre de mines adjacentes pour chaque cellule.
     """
-    taille = 10
+    
+    
     # Utilisation de list comprehension pour une initialisation propre (PEP 8)
     grille = [[Cellule() for _ in range(taille)] for _ in range(taille)]
 
@@ -28,11 +29,14 @@ def creer_grille(n_mines: int):
                         grille[i][j].incremente_nombre()
 
     return grille
-
+    
 
 
 def main():
-    print(creer_grille(10))
+    k =creer_grille(20,Taille)
+    for i in range(Taille):
+        print(k[i])
+        
 
 if __name__ == "__main__":
     main()

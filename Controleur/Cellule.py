@@ -40,7 +40,7 @@ class Cellule:
 
 
     def alterner_drapeau(self):
-        if not self.est_decouverte
+        if not self.est_decouverte():
             self.est_drapeau = not self.est_drapeau
 
     
