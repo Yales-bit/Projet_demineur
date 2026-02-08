@@ -1,4 +1,7 @@
-# Python bytecode
-**/__pycache__/
-*.py[cod]
-*$py.class
+# Dossiers de cache Python
+__pycache__/
+
+# Fichiers compilés individuels
+*.pyc
+*.pyo
+*.pyd
