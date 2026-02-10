@@ -8,7 +8,7 @@ class Grille:
         self.n_mines = n_mines
         self.taille = taille
         self.premier_clic = True
-        self.grille = [[Cellule() for _ in range(taille)] for _ in range(taille)]
+        self.grille = [[Cellule(ligne_cellule,col_cellule) for col_cellule in range(taille)] for ligne_cellule in range(taille)]
 
         emplacements = random.sample(range(taille * taille), n_mines)
 

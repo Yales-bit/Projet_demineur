@@ -68,16 +68,16 @@ class SauvegardeCase(Base):
     # La clé de partie : L'ID qui la lie a sa partie
     id_partie = Column(Integer, ForeignKey('parties.id'), nullable=False)
 
-    x_coord = Column(Integer, nullable = False)
-    y_coord = Column(Integer, nullable = False)
+    col_cellule = Column(Integer, nullable = False)
+    ligne_cellule = Column(Integer, nullable = False)
     est_mine = Column(Boolean, nullable = False)
     est_decouverte = Column(Boolean, nullable = False)
     est_drapeau = Column(Boolean, nullable = False)
-    voisin = Column(Integer, nullable = False)
+    nombre_mines_voisines = Column(Integer, nullable = False)
 
     # Relation inverse : Permet d'accéder à la partie depuis la case (ex: ma_case.partie)
     partie = relationship("SauvegardePartie", back_populates="cases")
 
     def __repr__(self):
-        return f"<Case(id={self.id}, x={self.x_coord}, y={self.y_coord}, est_mine={self.est_mine})>"
+        return f"<Case(id={self.id}, x={self.col_cellule}, y={self.ligne_cellule}, est_mine={self.est_mine})>"
     

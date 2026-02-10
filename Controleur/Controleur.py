@@ -1,6 +1,7 @@
 import random
 from Cellule import Cellule
 from Grille import Grille
+
 Taille = 8    
 
 

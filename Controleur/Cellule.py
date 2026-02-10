@@ -8,7 +8,9 @@ class etat(Enum):
 
 class Cellule:
 
-    def __init__(self, est_mine=False):
+    def __init__(self,ligne_cellule:int , col_cellule:int, est_mine=False):
+        self.ligne_cellule = ligne_cellule
+        self.col_cellule = col_cellule
         self.est_mine = est_mine
         self.est_decouverte = False
         self.est_drapeau = False
@@ -42,5 +44,5 @@ class Cellule:
 
 
     def alterner_drapeau(self):
-        if not self.est_decouverte():
+        if not self.est_decouverte:
             self.est_drapeau = not self.est_drapeau
