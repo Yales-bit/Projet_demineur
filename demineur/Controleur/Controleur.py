@@ -46,6 +46,8 @@ class Controleur:
         if not last_save:
             return None
 
+        self.partie_id = last_save.id
+
         grille_chargee = Grille(n_mines=last_save.nb_mines_total, taille=last_save.nb_lignes)
         grille_chargee.premier_clic = False 
         
