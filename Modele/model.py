@@ -1,11 +1,12 @@
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, Enum as SQL_Enum
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy import create_engine, ForeignKey, Boolean
-from datetime import datetime
-from enum import Enum
+import enum
 
-class Etat(Enum):
+from datetime import datetime
+
+class Etat(enum.Enum):
     EN_COURS = "EN_COURS"
     GAGNEE = "GAGNEE"
     PERDUE = "PERDUE"
@@ -35,7 +36,7 @@ class SauvegardePartie(Base):
     temps_ecoule = Column(Integer, default=0)
     
     # L'état global : "en_cours", "victoire", "defaite"
-    statut_jeu = Column(Etat, default="EN_COURS")
+    statut_jeu = Column(SQL_Enum(Etat), default="EN_COURS")
 
     # Dimensions (Nécessaires pour reconstruire la grille vide avant de la remplir)
     nb_lignes = Column(Integer, default=10, nullable=False)

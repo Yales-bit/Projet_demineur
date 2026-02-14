@@ -1,12 +1,12 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from models import Base, SauvegardePartie, SauvegardeCase
+from .model import Base, SauvegardePartie, SauvegardeCase
 
 # Définition de l'emplacement de la base de données
 # Le fichier "demineur.db" sera créé à la racine de votre projet
 DATABASE_URL = "sqlite:///demineur.db"
 
-engine = create_engine(DATABASE_URL, echo=True)
+engine = create_engine(DATABASE_URL, echo=False)
 
 #permer de créer des transactions pour sauvegarder/charger
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
