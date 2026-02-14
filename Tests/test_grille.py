@@ -4,8 +4,8 @@ import pytest
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from Controleur.Grille import Grille
-from Controleur.Cellule import Cellule, etat
+from demineur.Controleur.Grille import Grille
+from demineur.Controleur.Cellule import Cellule, etat
 
 @pytest.fixture
 def grille_test():

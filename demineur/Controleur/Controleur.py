@@ -1,25 +1,16 @@
 import sys
-import os
-
-# Ajout du dossier parent au path pour permettre les imports depuis la racine
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
 from PySide6.QtWidgets import QApplication
-from Modele.database import SessionLocal, initialiser_db
-from Modele.Modele import SauvegardePartie, Etat, SauvegardeCase
+from ..Modele.database import SessionLocal, initialiser_db
+from ..Modele.Modele import SauvegardePartie, Etat, SauvegardeCase
 
 try:
-    from Controleur.Grille import Grille
+    from .Grille import Grille
 except ImportError:
     from Grille import Grille
     
 try:
-    from Vue.Vue import FenetreDemineur
+    from ..Vue.Vue import FenetreDemineur
 except ImportError:
-    # Si on est dans le même dossier ou si Vue n'est pas vu comme un module
-    import sys
-    import os
-    # On ajoute le dossier parent de Vue au path si nécessaire (déjà fait, mais on s'assure)
     from Vue.Vue import FenetreDemineur
 
 class Controleur:

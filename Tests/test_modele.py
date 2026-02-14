@@ -4,10 +4,10 @@ import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-# Ajout du dossier parent au path pour les imports
+# Ajout du dossier parent au path pour que "demineur" soit reconnu comme module
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from Modele.Modele import Base, SauvegardePartie, SauvegardeCase, Etat
+from demineur.Modele.Modele import Base, SauvegardePartie, SauvegardeCase, Etat
 
 @pytest.fixture
 def session_test():
