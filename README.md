@@ -1,7 +1,7 @@
 # Projet Demineur
 
 Bienvenue dans ce projet de Demineur en Python.
-Il s'agit d'une reimplementation complete du jeu classique avec une architecture MVC (Modele-Vue-Controleur) et une interface graphique moderne basee sur PySide6.
+Il s'agit d'une implementation complete du jeu classique avec une architecture MVC (Modele-Vue-Controleur) et une interface graphique moderne basee sur PySide6.
 
 ## Pre-requis
 

@@ -5,9 +5,9 @@ build-backend = "hatchling.build"
 [project]
 name = "demineur"
 version = "0.0.1"
-description = "A simple Minesweeper game using PySide6"
+description = "A simple Minesweeper game using python"
 authors = [
-  { name = "Jules", email = "jules@example.com" },
+  { name = "Groupe 7 MIQ", email = "" },
 ]
 license = "MIT"
 readme = "README.md"
