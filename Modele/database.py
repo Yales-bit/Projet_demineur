@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from .model import Base, SauvegardePartie, SauvegardeCase
+from .Modele import Base, SauvegardePartie, SauvegardeCase
 
 # Définition de l'emplacement de la base de données
 # Le fichier "demineur.db" sera créé à la racine de votre projet
