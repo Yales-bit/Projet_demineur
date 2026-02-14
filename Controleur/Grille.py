@@ -1,5 +1,5 @@
 import random
-from Cellule import Cellule
+from .Cellule import Cellule
 
 
 class Grille:
