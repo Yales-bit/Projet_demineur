@@ -1,5 +1,8 @@
 import random
-from .Cellule import Cellule
+try:
+    from .Cellule import Cellule
+except ImportError:
+    from Cellule import Cellule
 
 
 class Grille:

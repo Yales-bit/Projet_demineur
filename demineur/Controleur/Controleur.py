@@ -1,9 +1,17 @@
-from Modele.database import SessionLocal, initialiser_db
-from Modele.model import SauvegardePartie, Etat, SauvegardeCase
-from Controleur.Cellule import Cellule
-from Controleur.Grille import Grille
+import sys
+from PySide6.QtWidgets import QApplication
+from ..Modele.database import SessionLocal, initialiser_db
+from ..Modele.Modele import SauvegardePartie, Etat, SauvegardeCase
 
-Taille = 8    
+try:
+    from .Grille import Grille
+except ImportError:
+    from Grille import Grille
+    
+try:
+    from ..Vue.Vue import FenetreDemineur
+except ImportError:
+    from Vue.Vue import FenetreDemineur
 
 class Controleur:
     def __init__(self):
@@ -20,6 +28,15 @@ class Controleur:
         else:
             print("Partie en cours chargée avec succès.")
 
+        # Lancement de l'interface graphique
+        self.app = QApplication(sys.argv)
+        self.fenetre = FenetreDemineur(self)
+        self.fenetre.show()
+
+    def lancer(self):
+        """Lance la boucle principale de l'application."""
+        sys.exit(self.app.exec())
+
     def charger_partie_existante(self):
         last_save = self.session.query(SauvegardePartie)\
             .filter(SauvegardePartie.statut_jeu == Etat.EN_COURS)\
@@ -28,6 +45,8 @@ class Controleur:
 
         if not last_save:
             return None
+
+        self.partie_id = last_save.id
 
         grille_chargee = Grille(n_mines=last_save.nb_mines_total, taille=last_save.nb_lignes)
         grille_chargee.premier_clic = False 
@@ -101,49 +120,51 @@ class Controleur:
             self.partie_id = None
             print("Sauvegarde supprimée (Partie terminée).")
 
+    # --- Méthodes de gestion des événements de la Vue ---
+
+    def traiter_clic_gauche(self, ligne, colonne):
+        """Gère le clic gauche (révéler) sur une case."""
+        cellule = self.grille.grille[ligne][colonne]
+        
+        if cellule.est_drapeau or cellule.est_decouverte:
+            return # On ne fait rien
+
+        resultat = self.grille.revele_case_clic(ligne, colonne)
+        
+        self.sauvegarder_etat_actuel()
+        self.fenetre.rafraichir_grille()
+
+        if resultat == 0:
+            # Perdu
+            self.supprimer_partie()
+            self.fenetre.afficher_message_fin("BOOM ! Vous avez perdu.")
+        
+        # Vérification de la victoire (si toutes les cases non-minées sont découvertes)
+        elif self.verifier_victoire():
+            self.supprimer_partie()
+            self.fenetre.afficher_message_fin("FELICITATIONS ! Vous avez gagné !")
+
+    def traiter_clic_droit(self, ligne, colonne):
+        """Gère le clic droit (drapeau) sur une case."""
+        cellule = self.grille.grille[ligne][colonne]
+        
+        if not cellule.est_decouverte:
+            cellule.alterner_drapeau()
+            self.sauvegarder_etat_actuel()
+            self.fenetre.rafraichir_grille()
+
+    def verifier_victoire(self):
+        """Vérifie si toutes les cases non-minées ont été découvertes."""
+        for x in range(self.grille.taille):
+            for y in range(self.grille.taille):
+                cell = self.grille.grille[x][y]
+                if not cell.est_mine and not cell.est_decouverte:
+                    return False
+        return True
+
 def main():
     ctrl = Controleur()
-    grille = ctrl.grille 
+    ctrl.lancer()
 
-    while True:
-        try:
-            print("\nGrille actuelle :")
-            for ligne_index, ligne_obj in enumerate(grille.grille):
-                print([("D" if c.est_drapeau else ("?" if not c.est_decouverte else (c.nombre_mines_voisines))) for c in ligne_obj])
-            
-            entree = input("\nAction (Ligne Colonne Action) ex: '5 2 C' pour casser ou '5 2 D' pour drapeau : ").split()
-            
-            if len(entree) < 3:
-                print("Format invalide. Utilisez : Ligne Colonne Action (C ou D)")
-                continue
-
-            l = int(entree[0])
-            c = int(entree[1])
-            action = entree[2].upper()
-
-            if action == 'D':
-                grille.grille[l][c].est_drapeau = not grille.grille[l][c].est_drapeau
-                print(f"Drapeau {'placé' if grille.grille[l][c].est_drapeau else 'retiré'} en ({l}, {c})")
-                ctrl.sauvegarder_etat_actuel()
-            
-            elif action == 'C':
-                if grille.grille[l][c].est_drapeau:
-                    print("Impossible de casser une case avec un drapeau ! Retirez-le d'abord.")
-                    continue
-                    
-                resultat = grille.revele_case_clic(l, c)
-                
-                if resultat == 0:
-                    print("\nBOOM ! Partie terminée.")
-                    ctrl.supprimer_partie()
-                    break
-                else:
-                    ctrl.sauvegarder_etat_actuel()
-            else:
-                print("Action inconnue. Utilisez 'C' pour casser ou 'D' pour drapeau.")
-
-        except (ValueError, IndexError):
-            print("Entrée invalide. Vérifiez les coordonnées et le format.")
-        
 if __name__ == "__main__":
     main()
