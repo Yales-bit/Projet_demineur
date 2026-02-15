@@ -3,9 +3,9 @@ name: Validation Python S6
 on:
   workflow_dispatch: # Permet de lancer le pipeline manuellement
   push:
-    branches: [ "main", "ton-nom-de-branche" ]
+    branches: [ "*" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "*" ]
 
 jobs:
   build:
